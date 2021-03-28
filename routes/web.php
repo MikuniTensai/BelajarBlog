@@ -22,10 +22,21 @@ Auth::routes(['verify' => true]);
 
 //Admin
 Route::group(['middleware' => ['auth','CheckRole:0']], function(){
-    Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
+    //View Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
+    //View Artikel
+    Route::get('/artikel', [App\Http\Controllers\Admin\ArtikelController::class, 'index'])->name('artikel');
+    Route::post('/artikel/create', [App\Http\Controllers\Admin\ArtikelController::class, 'create'])->name('artikel_create');
+    Route::get('/artikel/delete/{id}', [App\Http\Controllers\Admin\ArtikelController::class, 'delete'])->name('artikel_delete');
+        //View Update Artikel
+        Route::get('/artikel/update/{id}', [App\Http\Controllers\Admin\ArtikelController::class, 'update'])->name('artikel_update');
+        Route::post('/artikel/aksi_update/{id}', [App\Http\Controllers\Admin\ArtikelController::class, 'aksi_update'])->name('aksi_update');
+
+    //View User
+    Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
 });
 
-//User
+//View User
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', function () {
     return view('welcome');
